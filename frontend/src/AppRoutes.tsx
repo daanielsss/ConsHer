@@ -3,6 +3,7 @@ import Layout from './layouts/Layout';
 import HomePage from './Pages/HomePage';
 import AuthCallBackPage from './Pages/AuthCallBackPage';
 import ProtectedAdminRoute from './auth/ProtectedAdminRoute';
+import AdminDashboard from './Pages/AdminDashboard';
 
 const AppRoutes = () => {
     return (

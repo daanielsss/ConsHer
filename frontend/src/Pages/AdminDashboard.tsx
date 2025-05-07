@@ -16,7 +16,7 @@ export default function AdminDashboard() {
                 <p><strong>Correo:</strong> {user?.email}</p>
                 <button
                     className="mt-4 text-sm text-red-600 underline"
-                    onClick={() => logout({ returnTo: window.location.origin })}
+                    onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
                 >
                     Cerrar sesión
                 </button>
