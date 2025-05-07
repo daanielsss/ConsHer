@@ -29,7 +29,7 @@ export const createHouse = async (req: Request, res: Response) => {
     const saved = await newHouse.save();
     res.status(201).json(saved);
   } catch (err: any) {
-    console.error("Error al crear la casa:", err);
+    console.error("Error al crear la casa:  ", err);
     res
       .status(400)
       .json({ error: "Error al crear la casa.", details: err.message });
