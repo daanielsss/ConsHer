@@ -1,9 +1,14 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
+import { getUserFromToken } from "../lib/auth";
 
 export default function AdminDashboard() {
-    const { user, logout } = useAuth0();
     const navigate = useNavigate();
+    const user = getUserFromToken();
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    };
 
     const handleNavigation = (path: string) => navigate(path);
 
@@ -12,11 +17,10 @@ export default function AdminDashboard() {
             <h1 className="text-3xl font-bold mb-4">Panel del Administrador</h1>
 
             <div className="bg-white shadow rounded-lg p-4 mb-6">
-                <p><strong>Nombre:</strong> {user?.name}</p>
-                <p><strong>Correo:</strong> {user?.email}</p>
+                <p><strong>Correo:</strong> {user?.email || "Desconocido"}</p>
                 <button
                     className="mt-4 text-sm text-red-600 underline"
-                    onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
+                    onClick={handleLogout}
                 >
                     Cerrar sesión
                 </button>

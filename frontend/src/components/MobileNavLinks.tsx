@@ -1,20 +1,34 @@
-import { Link } from "react-router-dom"
-import { Button } from "./ui/button"
-import { useAuth0 } from "@auth0/auth0-react"
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
 
 export default function MobileNavLinks() {
-  const { logout} = useAuth0();
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
     <>
-       <Link to="/user-profile" className="flex bg-white items-center font-bold hover:text-orange-500"
-       >
-           Perfil
-       </Link>
-       <Button  onClick={()=>logout()} 
-           className="flex flex-item center px-3 font-bold hover:text-orange-500"
-       >
-           Salir
-       </Button>
+      {token && (
+        <>
+          <Link
+            to="/admin"
+            className="flex bg-white items-center font-bold hover:text-orange-500"
+          >
+            Panel
+          </Link>
+          <Button
+            onClick={handleLogout}
+            className="flex flex-item center px-3 font-bold hover:text-orange-500"
+          >
+            Salir
+          </Button>
+        </>
+      )}
     </>
-  )
+  );
 }
+

@@ -4,6 +4,9 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import morgan from "morgan";
 import { v2 as cloudinary } from "cloudinary";
+import authRoutes from "./routes/authRoutes";
+
+// Importamos las routes
 
 // Solo importamos las rutas necesarias
 import houseRoutes from "./routes/houseRoutes";
@@ -23,6 +26,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
+app.use("/api", authRoutes);
 
 // Ruta de prueba
 app.get("/health", async (req: Request, res: Response) => {

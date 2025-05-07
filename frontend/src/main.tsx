@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client'
 import './globals.css'
 import { BrowserRouter as Router } from 'react-router-dom'
 import App from './App'
-import Auth0ProviderWithNavigate from './auth/Auth0ProviderWithNavigate'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Toaster } from './components/ui/sonner'
 
@@ -19,10 +18,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Router>
       <QueryClientProvider client={queryClient}>
-        <Auth0ProviderWithNavigate>
-          <App />
-          <Toaster visibleToasts={1} position='top-right' richColors />
-        </Auth0ProviderWithNavigate>
+
+        <App />
+        <Toaster visibleToasts={1} position='top-right' richColors />
+
       </QueryClientProvider>
     </Router>
   </React.StrictMode>,
