@@ -1,24 +1,33 @@
+// AppRoutes.tsx
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './layouts/Layout';
 import HomePage from './Pages/HomePage';
 import AdminDashboard from './Pages/AdminDashboard';
 import LoginPage from './Pages/LoginPage';
 import ProtectedRoute from './auth/ProtectedRoute';
+import AdminHouses from './Pages/AdminHouses';
+import AdminCalculator from './Pages/AdminCalculator';
+import AdminExpenses from './Pages/GastosPage';
 
 const AppRoutes = () => {
     return (
         <Routes>
-            {/* Layout principal con rutas hijas */}
+            {/* Layout público */}
             <Route element={<Layout showHero={true} />}>
                 <Route path="/" element={<HomePage />} />
             </Route>
 
-            {/* Página de login (fuera del layout principal) */}
+            {/* Ruta login (sin layout) */}
             <Route path="/login" element={<LoginPage />} />
 
-            {/* Rutas protegidas */}
+            {/* Rutas protegidas con layout */}
             <Route element={<ProtectedRoute />}>
-                <Route path="/admin" element={<AdminDashboard />} />
+                <Route element={<Layout />}>
+                    <Route path="/admin" element={<AdminDashboard />} />
+                    <Route path="/admin/houses" element={<AdminHouses />} />
+                    <Route path="/admin/calculadora" element={<AdminCalculator />} />
+                    <Route path="/admin/gastos" element={<AdminExpenses />} />
+                </Route>
             </Route>
 
             {/* Ruta por defecto */}

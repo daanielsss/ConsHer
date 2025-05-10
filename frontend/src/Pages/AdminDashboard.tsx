@@ -1,3 +1,4 @@
+// AdminDashboard.tsx
 import { useNavigate } from "react-router-dom";
 import { getUserFromToken } from "../lib/auth";
 
@@ -5,43 +6,30 @@ export default function AdminDashboard() {
     const navigate = useNavigate();
     const user = getUserFromToken();
 
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        navigate("/login");
-    };
-
     const handleNavigation = (path: string) => navigate(path);
 
     return (
-        <div className="p-8 max-w-4xl mx-auto">
-            <h1 className="text-3xl font-bold mb-4">Panel del Administrador</h1>
+        <div className="p-6 md:p-10 space-y-6">
+            <h1 className="text-3xl font-bold text-gray-800">Panel del Administrador</h1>
 
-            <div className="bg-white shadow rounded-lg p-4 mb-6">
-                <p><strong>Correo:</strong> {user?.email || "Desconocido"}</p>
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                 <button
-                    className="mt-4 text-sm text-red-600 underline"
-                    onClick={handleLogout}
-                >
-                    Cerrar sesión
-                </button>
-            </div>
-
-            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
-                <button
-                    className="p-4 bg-blue-600 text-white rounded-lg shadow"
                     onClick={() => handleNavigation("/admin/houses")}
+                    className="p-6 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 transition"
                 >
                     🏠 Gestionar Casas
                 </button>
+
                 <button
-                    className="p-4 bg-green-600 text-white rounded-lg shadow"
                     onClick={() => handleNavigation("/admin/calculadora")}
+                    className="p-6 bg-green-600 text-white rounded-xl shadow hover:bg-green-700 transition"
                 >
                     🧮 Calculadora de Materiales
                 </button>
+
                 <button
-                    className="p-4 bg-purple-600 text-white rounded-lg shadow"
                     onClick={() => handleNavigation("/admin/gastos")}
+                    className="p-6 bg-purple-600 text-white rounded-xl shadow hover:bg-purple-700 transition"
                 >
                     📊 Control de Gastos
                 </button>
