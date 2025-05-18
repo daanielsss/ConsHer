@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import morgan from "morgan";
 import { v2 as cloudinary } from "cloudinary";
 import authRoutes from "./routes/authRoutes";
+import projectRoutes from "./routes/projectRoutes";
 
 // Importamos las routes
 
@@ -35,6 +36,8 @@ app.get("/health", async (req: Request, res: Response) => {
 
 // Ruta principal
 app.use("/api/houses", houseRoutes);
+
+app.use("/api/proyectos", projectRoutes);
 
 const port = process.env.port || 3000;
 app.listen(port, () => {

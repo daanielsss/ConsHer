@@ -7,7 +7,8 @@ import LoginPage from './Pages/LoginPage';
 import ProtectedRoute from './auth/ProtectedRoute';
 import AdminHouses from './Pages/AdminHouses';
 import AdminCalculator from './Pages/AdminCalculator';
-import AdminExpenses from './Pages/GastosPage';
+import AdminExpenses from './Pages/AdminGastos';
+import ProjectDetailPage from "./Pages/ProjectDetailPage";
 
 const AppRoutes = () => {
     return (
@@ -27,6 +28,7 @@ const AppRoutes = () => {
                     <Route path="/admin/houses" element={<AdminHouses />} />
                     <Route path="/admin/calculadora" element={<AdminCalculator />} />
                     <Route path="/admin/gastos" element={<AdminExpenses />} />
+                    <Route path="/admin/gastos/:id" element={<ProjectDetailPage />} />
                 </Route>
             </Route>
 
