@@ -60,29 +60,26 @@ export default function ProjectDetailPage() {
     const totalMateriales = proyecto.materiales.reduce((acc, m) => acc + (m.precio || 0), 0);
 
     const estadoColors: Record<string, string> = {
-        "En proceso": "bg-yellow-100 text-yellow-800",
-        "Finalizado": "bg-green-100 text-green-800",
-        "Pausado": "bg-red-100 text-red-800",
+        "En proceso": "bg-yellow-100 text-yellow-800 dark:bg-yellow-200/20 dark:text-yellow-300",
+        "Finalizado": "bg-green-100 text-green-800 dark:bg-green-200/20 dark:text-green-300",
+        "Pausado": "bg-red-100 text-red-800 dark:bg-red-200/20 dark:text-red-300",
     };
 
     return (
         <div className="p-6 max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">{proyecto.nombre}</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-4">{proyecto.nombre}</h2>
 
             <div className="flex flex-wrap gap-4 mb-6">
-                <div className="bg-gray-100 rounded-md px-4 py-2 text-sm font-medium text-gray-700 shadow-sm">
-                    📍 Dirección: <span className="font-semibold">{proyecto.direccion}</span>
+                <div className="bg-muted rounded-md px-4 py-2 text-sm font-medium text-muted-foreground shadow-sm">
+                    📍 Dirección: <span className="font-semibold text-foreground">{proyecto.direccion}</span>
                 </div>
-                <div className="bg-gray-100 rounded-md px-4 py-2 text-sm font-medium text-gray-700 shadow-sm">
+                <div className="bg-muted rounded-md px-4 py-2 text-sm font-medium text-muted-foreground shadow-sm">
                     📅 Fecha de inicio:{" "}
-                    <span className="font-semibold">
+                    <span className="font-semibold text-foreground">
                         {new Date(proyecto.fechaInicio).toLocaleDateString()}
                     </span>
                 </div>
-                <div
-                    className={`rounded-md px-4 py-2 text-sm font-medium shadow-sm ${estadoColors[proyecto.estado] || "bg-gray-100 text-gray-700"
-                        }`}
-                >
+                <div className={`rounded-md px-4 py-2 text-sm font-medium shadow-sm ${estadoColors[proyecto.estado]}`}>
                     🔄 Estado: <span className="font-semibold">{proyecto.estado}</span>
                 </div>
             </div>
@@ -92,7 +89,10 @@ export default function ProjectDetailPage() {
                     <button
                         key={tab}
                         onClick={() => setActiveTab(tab)}
-                        className={`px-4 py-2 rounded ${activeTab === tab ? "bg-orange-500 text-white" : "bg-gray-100"}`}
+                        className={`px-4 py-2 rounded transition font-medium ${activeTab === tab
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-muted text-muted-foreground hover:bg-muted/70"
+                            }`}
                     >
                         {tab.charAt(0).toUpperCase() + tab.slice(1)}
                     </button>
@@ -101,16 +101,16 @@ export default function ProjectDetailPage() {
 
             {/* TAB: GASTOS */}
             {activeTab === "gastos" && (
-                <div className="bg-white shadow p-6 rounded-lg">
+                <div className="bg-card shadow p-6 rounded-lg text-card-foreground">
                     <FormGasto projectId={id!} />
                     <h3 className="text-lg font-semibold mt-6 mb-2">Gastos Generales</h3>
                     {proyecto.gastos.length === 0 ? (
-                        <p className="text-gray-500">No hay gastos registrados.</p>
+                        <p className="text-muted-foreground">No hay gastos registrados.</p>
                     ) : (
                         <>
                             <table className="w-full text-sm table-auto">
                                 <thead>
-                                    <tr className="bg-gray-100 text-left">
+                                    <tr className="bg-muted text-left text-muted-foreground">
                                         <th className="p-2">Descripción</th>
                                         <th className="p-2">Monto</th>
                                         <th className="p-2">Fecha</th>
@@ -118,16 +118,18 @@ export default function ProjectDetailPage() {
                                 </thead>
                                 <tbody>
                                     {proyecto.gastos.map((g, i) => (
-                                        <tr key={i} className="border-b">
+                                        <tr key={i} className="border-b border-border">
                                             <td className="p-2">{g.descripcion}</td>
-                                            <td className="p-2 text-green-600 font-medium">{formatCurrency(g.monto)}</td>
+                                            <td className="p-2 text-green-600 dark:text-green-400 font-medium">
+                                                {formatCurrency(g.monto)}
+                                            </td>
                                             <td className="p-2">{new Date(g.fecha).toLocaleDateString()}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                             <div className="mt-4 text-right">
-                                <div className="inline-block bg-green-50 px-4 py-2 rounded-md text-sm font-semibold text-green-700 shadow-sm">
+                                <div className="inline-block bg-green-100 dark:bg-green-900/30 px-4 py-2 rounded-md text-sm font-semibold text-green-800 dark:text-green-300 shadow-sm">
                                     Total: {formatCurrency(totalGastos)}
                                 </div>
                             </div>
@@ -138,16 +140,16 @@ export default function ProjectDetailPage() {
 
             {/* TAB: NOMINA */}
             {activeTab === "nomina" && (
-                <div className="bg-white shadow p-6 rounded-lg">
+                <div className="bg-card shadow p-6 rounded-lg text-card-foreground">
                     <FormNomina projectId={id!} />
                     <h3 className="text-lg font-semibold mt-6 mb-2">Nómina</h3>
                     {proyecto.nomina.length === 0 ? (
-                        <p className="text-gray-500">No hay registros de nómina.</p>
+                        <p className="text-muted-foreground">No hay registros de nómina.</p>
                     ) : (
                         <>
                             <table className="w-full text-sm table-auto">
                                 <thead>
-                                    <tr className="bg-gray-100 text-left">
+                                    <tr className="bg-muted text-left text-muted-foreground">
                                         <th className="p-2">Semana</th>
                                         <th className="p-2">Trabajador</th>
                                         <th className="p-2">Sueldo</th>
@@ -157,7 +159,7 @@ export default function ProjectDetailPage() {
                                 </thead>
                                 <tbody>
                                     {proyecto.nomina.map((n, i) => (
-                                        <tr key={i} className="border-b">
+                                        <tr key={i} className="border-b border-border">
                                             <td className="p-2">{n.semana}</td>
                                             <td className="p-2">{n.trabajador}</td>
                                             <td className="p-2">{formatCurrency(n.sueldo)}</td>
@@ -168,7 +170,7 @@ export default function ProjectDetailPage() {
                                 </tbody>
                             </table>
                             <div className="mt-4 text-right">
-                                <div className="inline-block bg-green-50 px-4 py-2 rounded-md text-sm font-semibold text-green-700 shadow-sm">
+                                <div className="inline-block bg-green-100 dark:bg-green-900/30 px-4 py-2 rounded-md text-sm font-semibold text-green-800 dark:text-green-300 shadow-sm">
                                     Total: {formatCurrency(totalNomina)}
                                 </div>
                             </div>
@@ -179,16 +181,16 @@ export default function ProjectDetailPage() {
 
             {/* TAB: MATERIALES */}
             {activeTab === "materiales" && (
-                <div className="bg-white shadow p-6 rounded-lg">
+                <div className="bg-card shadow p-6 rounded-lg text-card-foreground">
                     <FormMaterial projectId={id!} />
                     <h3 className="text-lg font-semibold mt-6 mb-2">Materiales</h3>
                     {proyecto.materiales.length === 0 ? (
-                        <p className="text-gray-500">No hay materiales registrados.</p>
+                        <p className="text-muted-foreground">No hay materiales registrados.</p>
                     ) : (
                         <>
                             <table className="w-full text-sm table-auto">
                                 <thead>
-                                    <tr className="bg-gray-100 text-left">
+                                    <tr className="bg-muted text-left text-muted-foreground">
                                         <th className="p-2">Material</th>
                                         <th className="p-2">Cantidad</th>
                                         <th className="p-2">Precio</th>
@@ -198,7 +200,7 @@ export default function ProjectDetailPage() {
                                 </thead>
                                 <tbody>
                                     {proyecto.materiales.map((m, i) => (
-                                        <tr key={i} className="border-b">
+                                        <tr key={i} className="border-b border-border">
                                             <td className="p-2">{m.material}</td>
                                             <td className="p-2">{m.cantidad}</td>
                                             <td className="p-2">{formatCurrency(m.precio)}</td>
@@ -209,7 +211,7 @@ export default function ProjectDetailPage() {
                                 </tbody>
                             </table>
                             <div className="mt-4 text-right">
-                                <div className="inline-block bg-green-50 px-4 py-2 rounded-md text-sm font-semibold text-green-700 shadow-sm">
+                                <div className="inline-block bg-green-100 dark:bg-green-900/30 px-4 py-2 rounded-md text-sm font-semibold text-green-800 dark:text-green-300 shadow-sm">
                                     Total: {formatCurrency(totalMateriales)}
                                 </div>
                             </div>

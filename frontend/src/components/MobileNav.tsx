@@ -23,17 +23,17 @@ export default function MobileNav() {
     return (
         <Sheet>
             <SheetTrigger>
-                <Menu className="text-orange-500" />
+                <Menu className="text-primary" />
             </SheetTrigger>
             <SheetContent className="space-y-3">
                 <SheetTitle>
                     {user ? (
                         <span className="flex items-center font-bold gap-2">
-                            <CircleUserRound className="text-orange-500" />
+                            <CircleUserRound className="text-primary" />
                             {user.email}
                         </span>
                     ) : (
-                        <span>Bienvenido a ConsHer</span>
+                        <span className="text-foreground">Bienvenido a ConsHer</span>
                     )}
                 </SheetTitle>
 
@@ -45,7 +45,7 @@ export default function MobileNav() {
                     ) : (
                         <Button
                             onClick={handleLogin}
-                            className="flex-1 font-bold bg-orange-500"
+                            className="flex-1 font-bold bg-primary text-primary-foreground hover:bg-primary/80"
                         >
                             Iniciar sesión
                         </Button>

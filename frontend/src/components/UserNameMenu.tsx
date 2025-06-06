@@ -19,27 +19,27 @@ export default function UserNameMenu() {
     navigate("/login");
   };
 
-  if (!user) return null; // Si no hay sesión activa, no muestra el menú
+  if (!user) return null;
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center px-3 font-bold hover:text-orange-500 gap-2">
-        <CircleUserRound className="text-orange-500" />
+      <DropdownMenuTrigger className="flex items-center px-3 font-bold text-foreground gap-2">
+        <CircleUserRound className="text-primary" />
         {user.email}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="min-w-[220px]">
-        <DropdownMenuItem className="font-semibold text-gray-700">
+      <DropdownMenuContent className="min-w-[220px] bg-popover text-popover-foreground border border-border">
+        <DropdownMenuItem className="font-semibold text-muted-foreground">
           Sesión iniciada
         </DropdownMenuItem>
 
         <Separator />
 
-        <DropdownMenuItem>
+        <DropdownMenuItem asChild>
           <Button
-            className="flex items-center gap-2 font-bold text-white bg-orange-500 hover:bg-orange-600 w-full justify-center"
+            className="w-full justify-center font-bold bg-destructive text-white hover:bg-destructive-foreground"
             onClick={handleLogout}
           >
-            <ArrowRightFromLine />
+            <ArrowRightFromLine className="mr-2" />
             Salir
           </Button>
         </DropdownMenuItem>

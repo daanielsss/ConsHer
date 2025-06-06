@@ -14,7 +14,7 @@ export default function MainNav() {
       ) : (
         <Button
           variant="ghost"
-          className="font-bold hover:text-orange-500 hover:bg-white"
+          className="font-bold text-foreground hover:bg-accent hover:text-accent-foreground"
           onClick={() => navigate("/login")}
         >
           Iniciar sesión

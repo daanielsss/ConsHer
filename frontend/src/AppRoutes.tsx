@@ -9,6 +9,9 @@ import AdminHouses from './Pages/AdminHouses';
 import AdminCalculator from './Pages/AdminCalculator';
 import AdminExpenses from './Pages/AdminGastos';
 import ProjectDetailPage from "./Pages/ProjectDetailPage";
+import EditarCasa from "./Pages/EditarCasa";
+import HouseDetail from "./Pages/HouseDetail";
+
 
 const AppRoutes = () => {
     return (
@@ -26,6 +29,8 @@ const AppRoutes = () => {
                 <Route element={<Layout />}>
                     <Route path="/admin" element={<AdminDashboard />} />
                     <Route path="/admin/houses" element={<AdminHouses />} />
+                    <Route path="/admin/houses/:id/editar" element={<EditarCasa />} />
+                    <Route path="/casa/:id" element={<HouseDetail />} />
                     <Route path="/admin/calculadora" element={<AdminCalculator />} />
                     <Route path="/admin/gastos" element={<AdminExpenses />} />
                     <Route path="/admin/gastos/:id" element={<ProjectDetailPage />} />

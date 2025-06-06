@@ -16,13 +16,13 @@ export default function MobileNavLinks() {
         <>
           <Link
             to="/admin"
-            className="flex bg-white items-center font-bold hover:text-orange-500"
+            className="flex items-center font-bold text-foreground hover:text-accent"
           >
             Panel
           </Link>
           <Button
             onClick={handleLogout}
-            className="flex flex-item center px-3 font-bold hover:text-orange-500"
+            className="flex items-center justify-center px-3 font-bold bg-destructive text-white hover:bg-destructive-foreground"
           >
             Salir
           </Button>

@@ -7,7 +7,7 @@ import {
     UserCircle,
     Building,
     PanelLeftClose,
-    PanelLeftOpen// ← nuevo ícono
+    PanelLeftOpen,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getUserFromToken } from "@/lib/auth";
@@ -21,8 +21,8 @@ export default function Sidebar() {
 
     const navItems = [
         { label: "Inicio", icon: <Home />, path: "/" },
-        { label: "Panel", icon: <LayoutDashboard />, path: "/admin" },
         { label: "Propiedades", icon: <Building />, path: "/admin/houses" },
+        { label: "Panel", icon: <LayoutDashboard />, path: "/admin" },
         { label: "Calculadora", icon: <Ruler />, path: "/admin/calculadora" },
         { label: "Gastos", icon: <BarChart2 />, path: "/admin/gastos" },
     ];
@@ -32,33 +32,30 @@ export default function Sidebar() {
         navigate("/login");
     };
 
-    if (!user) return null; // ← Asegura que solo el admin vea la sidebar
+    if (!user) return null;
 
     return (
         <aside
-            className={`h-screen fixed top-0 left-0 bg-[#1e2d2f] text-white flex flex-col transition-all duration-300 z-50
-        ${expanded ? "w-56" : "w-16"}`}
+            className={`h-screen fixed top-0 left-0 bg-primary text-primary-foreground flex flex-col transition-all duration-300 z-50
+          ${expanded ? "w-56" : "w-16"}`}
         >
             <div className="flex flex-col h-full justify-between">
                 {/* Header del sidebar */}
                 <div>
-                    <div className="flex items-center justify-between px-4 py-4 border-b border-[#2a3c3e]">
-                        {expanded && <h1 className="text-lg font-bold text-orange-400">ConsHer</h1>}
+                    <div className="flex items-center justify-between px-4 py-4 border-b border-border">
+                        {expanded && <h1 className="text-lg font-bold">ConsHer</h1>}
                         <button onClick={toggleSidebar}>
                             {expanded ? <PanelLeftClose /> : <PanelLeftOpen />}
                         </button>
-
-
-
                     </div>
 
                     {/* Perfil */}
                     <div className="flex flex-col items-center mt-6 mb-4 px-2">
-                        <UserCircle size={40} className="text-orange-400" />
+                        <UserCircle size={40} className="text-accent-foreground" />
                         {expanded && user && (
                             <div className="mt-2 text-center">
                                 <p className="text-sm font-semibold">{user.name || "Admin"}</p>
-                                <p className="text-xs text-gray-300">{user.email}</p>
+                                <p className="text-xs text-muted-foreground">{user.email}</p>
                             </div>
                         )}
                     </div>
@@ -69,9 +66,11 @@ export default function Sidebar() {
                             <Link
                                 key={item.path}
                                 to={item.path}
-                                className={`flex items-center justify-between px-4 py-3 hover:bg-[#2a3c3e] transition text-sm font-medium
-                  ${location.pathname === item.path ? "bg-orange-600" : ""}
-                  ${!expanded ? "justify-center" : ""}`}
+                                className={`flex items-center justify-between px-4 py-3 transition text-sm font-medium rounded-md
+                    ${location.pathname === item.path
+                                        ? "bg-accent text-accent-foreground font-semibold"
+                                        : "hover:bg-accent hover:text-accent-foreground"}
+                    ${!expanded ? "justify-center" : ""}`}
                             >
                                 {expanded ? (
                                     <>
@@ -87,17 +86,20 @@ export default function Sidebar() {
                 </div>
 
                 {/* Logout */}
-                <div className="px-4 py-4 border-t border-[#2a3c3e] mt-auto">
+                <div className="px-4 py-4 border-t border-border mt-auto">
                     {expanded ? (
                         <button
                             onClick={handleLogout}
-                            className="w-full text-red-400 hover:text-red-600 flex items-center justify-between"
+                            className="w-full text-destructive hover:text-destructive-foreground flex items-center justify-between"
                         >
                             <span>Cerrar sesión</span>
                             <LogOut size={18} />
                         </button>
                     ) : (
-                        <button onClick={handleLogout} className="text-red-400 hover:text-red-600">
+                        <button
+                            onClick={handleLogout}
+                            className="text-destructive hover:text-destructive-foreground"
+                        >
                             <LogOut />
                         </button>
                     )}

@@ -49,11 +49,11 @@ export default function AdminGastos() {
     };
 
     return (
-        <div className="p-6 max-w-5xl mx-auto">
-            <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">Proyectos</h2>
+        <div className="p-6 max-w-5xl mx-auto space-y-8">
+            <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-bold text-foreground">Proyectos</h2>
                 <button
-                    className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 flex items-center gap-2"
+                    className="bg-primary text-primary-foreground px-4 py-2 rounded hover:opacity-90 flex items-center gap-2 transition"
                     onClick={() => setShowForm(!showForm)}
                 >
                     <Plus size={18} />
@@ -62,32 +62,72 @@ export default function AdminGastos() {
             </div>
 
             {showForm && (
-                <div className="bg-white shadow rounded-lg p-6 mb-6">
-                    <h3 className="font-semibold text-gray-700 mb-4">Crear nuevo proyecto</h3>
+                <div className="bg-card shadow-md rounded-lg p-6 space-y-4 border border-border">
+                    <h3 className="font-semibold text-foreground">Crear nuevo proyecto</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange} className="border px-3 py-2 rounded" />
-                        <input name="direccion" placeholder="Dirección" value={form.direccion} onChange={handleChange} className="border px-3 py-2 rounded" />
-                        <input name="fechaInicio" type="date" value={form.fechaInicio} onChange={handleChange} className="border px-3 py-2 rounded" />
-                        <input name="presupuestoEstimado" type="number" placeholder="Presupuesto" value={form.presupuestoEstimado} onChange={handleChange} className="border px-3 py-2 rounded" />
-                        <input name="gananciaEstimada" type="number" placeholder="Ganancia Esperada" value={form.gananciaEstimada} onChange={handleChange} className="border px-3 py-2 rounded" />
+                        <input
+                            name="nombre"
+                            placeholder="Nombre"
+                            value={form.nombre}
+                            onChange={handleChange}
+                            className="border px-3 py-2 rounded bg-background text-foreground"
+                        />
+                        <input
+                            name="direccion"
+                            placeholder="Dirección"
+                            value={form.direccion}
+                            onChange={handleChange}
+                            className="border px-3 py-2 rounded bg-background text-foreground"
+                        />
+                        <input
+                            name="fechaInicio"
+                            type="date"
+                            value={form.fechaInicio}
+                            onChange={handleChange}
+                            className="border px-3 py-2 rounded bg-background text-foreground"
+                        />
+                        <input
+                            name="presupuestoEstimado"
+                            type="number"
+                            placeholder="Presupuesto"
+                            value={form.presupuestoEstimado}
+                            onChange={handleChange}
+                            className="border px-3 py-2 rounded bg-background text-foreground"
+                        />
+                        <input
+                            name="gananciaEstimada"
+                            type="number"
+                            placeholder="Ganancia Esperada"
+                            value={form.gananciaEstimada}
+                            onChange={handleChange}
+                            className="border px-3 py-2 rounded bg-background text-foreground"
+                        />
                     </div>
-                    <button onClick={() => crearProyecto.mutate()} className="mt-4 bg-green-600 text-white px-4 py-2 rounded">Guardar Proyecto</button>
+                    <button
+                        onClick={() => crearProyecto.mutate()}
+                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+                    >
+                        Guardar Proyecto
+                    </button>
                 </div>
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {isLoading ? (
-                    <p>Cargando proyectos...</p>
+                    <p className="text-muted-foreground">Cargando proyectos...</p>
                 ) : (
                     proyectos?.map((proyecto: any) => (
-                        <div key={proyecto._id} className="border p-4 rounded shadow bg-white">
+                        <div
+                            key={proyecto._id}
+                            className="border p-4 rounded shadow bg-card text-card-foreground space-y-1"
+                        >
                             <h4 className="text-lg font-semibold">{proyecto.nombre}</h4>
-                            <p className="text-sm text-gray-600">📍 {proyecto.direccion}</p>
-                            <p className="text-sm text-gray-600">📅 {new Date(proyecto.fechaInicio).toLocaleDateString()}</p>
+                            <p className="text-sm">📍 {proyecto.direccion}</p>
+                            <p className="text-sm">📅 {new Date(proyecto.fechaInicio).toLocaleDateString()}</p>
                             <p className="text-sm font-medium">Estado: {proyecto.estado}</p>
                             <button
                                 onClick={() => navigate(`/admin/gastos/${proyecto._id}`)}
-                                className="text-blue-600 hover:underline flex items-center gap-1 mt-2"
+                                className="text-primary hover:underline flex items-center gap-1 mt-2 text-sm"
                             >
                                 <FolderOpen size={16} />
                                 Ver Detalles

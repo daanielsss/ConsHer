@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
@@ -6,7 +7,10 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 const CLOUDINARY_URL = import.meta.env.VITE_CLOUDINARY_UPLOAD_URL;
 const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
-export default function AdminHouses() {
+export default function EditarCasa() {
+    const { id } = useParams();
+    const navigate = useNavigate();
+
     const [form, setForm] = useState({
         title: "",
         description: "",
@@ -21,6 +25,15 @@ export default function AdminHouses() {
     });
 
     const [uploading, setUploading] = useState(false);
+
+    useEffect(() => {
+        axios.get(`/api/houses/${id}`)
+            .then(res => setForm(res.data))
+            .catch(err => {
+                console.error("Error al cargar la casa:", err);
+                alert("No se pudo cargar la información de la casa.");
+            });
+    }, [id]);
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -49,15 +62,6 @@ export default function AdminHouses() {
         setUploading(false);
     };
 
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({
-        onDrop: handleDrop,
-        accept: {
-            'image/jpeg': ['.jpg', '.jpeg'],
-            'image/png': ['.png'],
-        },
-        multiple: true,
-    });
-
     const handleReorder = (result: any) => {
         if (!result.destination) return;
 
@@ -68,11 +72,18 @@ export default function AdminHouses() {
         setForm((prev) => ({ ...prev, images: reordered }));
     };
 
+    const eliminarImagen = (url: string) => {
+        setForm((prev) => ({
+            ...prev,
+            images: prev.images.filter((img) => img !== url),
+        }));
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post("/api/houses", {
+            await axios.put(`/api/houses/${id}`, {
                 ...form,
                 price: Number(form.price),
                 bedrooms: Number(form.bedrooms),
@@ -81,29 +92,26 @@ export default function AdminHouses() {
                 landSize: Number(form.landSize),
             });
 
-            console.log("Casa guardada:", response.data);
-            alert("Casa agregada exitosamente.");
-            setForm({
-                title: "",
-                description: "",
-                address: "",
-                price: "",
-                status: "disponible",
-                bedrooms: "",
-                bathrooms: "",
-                area: "",
-                landSize: "",
-                images: [],
-            });
+            alert("Casa actualizada exitosamente.");
+            navigate("/admin");
         } catch (err) {
-            console.error("Error al guardar casa:", err);
-            alert("Error al guardar casa. Revisa consola.");
+            console.error("Error al actualizar la casa:", err);
+            alert("No se pudo actualizar la casa.");
         }
     };
 
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop: handleDrop,
+        accept: {
+            'image/jpeg': ['.jpg', '.jpeg'],
+            'image/png': ['.png'],
+        },
+        multiple: true,
+    });
+
     return (
         <div className="bg-card shadow-md rounded-xl p-6 max-w-4xl mx-auto space-y-6">
-            <h2 className="text-2xl font-bold text-foreground">Agregar Nueva Casa</h2>
+            <h2 className="text-2xl font-bold text-foreground">Editar Casa</h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -183,12 +191,7 @@ export default function AdminHouses() {
                                                         />
                                                         <button
                                                             type="button"
-                                                            onClick={() =>
-                                                                setForm((prev) => ({
-                                                                    ...prev,
-                                                                    images: prev.images.filter((_, i) => i !== index),
-                                                                }))
-                                                            }
+                                                            onClick={() => eliminarImagen(img)}
                                                             className="absolute top-1 right-1 bg-red-600 text-white text-xs rounded-full px-2 py-0.5 opacity-0 group-hover:opacity-100 transition"
                                                             title="Eliminar imagen"
                                                         >
@@ -220,7 +223,7 @@ export default function AdminHouses() {
                     type="submit"
                     className="bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 font-semibold"
                 >
-                    Guardar Casa
+                    Guardar Cambios
                 </button>
             </form>
         </div>

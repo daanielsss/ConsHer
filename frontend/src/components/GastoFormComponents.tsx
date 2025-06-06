@@ -19,33 +19,33 @@ export function FormGasto({ projectId }: { projectId: string }) {
     );
 
     return (
-        <div className="mb-4">
-            <h4 className="text-sm font-semibold mb-1">Agregar Gasto</h4>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-2">
+        <div className="mb-6">
+            <h4 className="text-sm font-semibold mb-2 text-foreground">Agregar Gasto</h4>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
                 <input
                     placeholder="Descripción"
-                    name="descripcion"
                     value={form.descripcion}
                     onChange={(e) => setForm({ ...form, descripcion: e.target.value })}
-                    className="border px-2 py-1 rounded"
+                    className="border border-border bg-background text-foreground px-3 py-2 text-sm rounded-md"
                 />
                 <input
                     type="number"
                     placeholder="Monto"
-                    name="monto"
                     value={form.monto}
                     onChange={(e) => setForm({ ...form, monto: e.target.value })}
-                    className="border px-2 py-1 rounded"
+                    className="border border-border bg-background text-foreground px-3 py-2 text-sm rounded-md"
                 />
                 <input
                     type="date"
-                    name="fecha"
                     value={form.fecha}
                     onChange={(e) => setForm({ ...form, fecha: e.target.value })}
-                    className="border px-2 py-1 rounded"
+                    className="border border-border bg-background text-foreground px-3 py-2 text-sm rounded-md"
                 />
             </div>
-            <button onClick={() => mutation.mutate()} className="text-sm bg-green-600 text-white px-3 py-1 rounded">
+            <button
+                onClick={() => mutation.mutate()}
+                className="bg-primary text-primary-foreground hover:bg-primary/90 transition-colors px-4 py-2 rounded-md text-sm"
+            >
                 Guardar Gasto
             </button>
         </div>
@@ -75,16 +75,46 @@ export function FormNomina({ projectId }: { projectId: string }) {
     );
 
     return (
-        <div className="mb-4">
-            <h4 className="text-sm font-semibold mb-1">Agregar Nómina</h4>
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-2 mb-2">
-                <input placeholder="Semana" value={form.semana} onChange={(e) => setForm({ ...form, semana: e.target.value })} className="border px-2 py-1 rounded" />
-                <input placeholder="Trabajador" value={form.trabajador} onChange={(e) => setForm({ ...form, trabajador: e.target.value })} className="border px-2 py-1 rounded" />
-                <input placeholder="Sueldo" type="number" value={form.sueldo} onChange={(e) => setForm({ ...form, sueldo: e.target.value })} className="border px-2 py-1 rounded" />
-                <input placeholder="Pago" type="number" value={form.pago} onChange={(e) => setForm({ ...form, pago: e.target.value })} className="border px-2 py-1 rounded" />
-                <input placeholder="Observaciones" value={form.observaciones} onChange={(e) => setForm({ ...form, observaciones: e.target.value })} className="border px-2 py-1 rounded" />
+        <div className="mb-6">
+            <h4 className="text-sm font-semibold mb-2 text-foreground">Agregar Nómina</h4>
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-2 mb-3">
+                <input
+                    placeholder="Semana"
+                    value={form.semana}
+                    onChange={(e) => setForm({ ...form, semana: e.target.value })}
+                    className="border border-border bg-background text-foreground px-3 py-2 text-sm rounded-md"
+                />
+                <input
+                    placeholder="Trabajador"
+                    value={form.trabajador}
+                    onChange={(e) => setForm({ ...form, trabajador: e.target.value })}
+                    className="border border-border bg-background text-foreground px-3 py-2 text-sm rounded-md"
+                />
+                <input
+                    type="number"
+                    placeholder="Sueldo"
+                    value={form.sueldo}
+                    onChange={(e) => setForm({ ...form, sueldo: e.target.value })}
+                    className="border border-border bg-background text-foreground px-3 py-2 text-sm rounded-md"
+                />
+                <input
+                    type="number"
+                    placeholder="Pago"
+                    value={form.pago}
+                    onChange={(e) => setForm({ ...form, pago: e.target.value })}
+                    className="border border-border bg-background text-foreground px-3 py-2 text-sm rounded-md"
+                />
+                <input
+                    placeholder="Observaciones"
+                    value={form.observaciones}
+                    onChange={(e) => setForm({ ...form, observaciones: e.target.value })}
+                    className="border border-border bg-background text-foreground px-3 py-2 text-sm rounded-md"
+                />
             </div>
-            <button onClick={() => mutation.mutate()} className="text-sm bg-green-600 text-white px-3 py-1 rounded">
+            <button
+                onClick={() => mutation.mutate()}
+                className="bg-primary text-primary-foreground hover:bg-primary/90 transition-colors px-4 py-2 rounded-md text-sm"
+            >
                 Guardar Nómina
             </button>
         </div>
@@ -114,16 +144,46 @@ export function FormMaterial({ projectId }: { projectId: string }) {
     );
 
     return (
-        <div className="mb-4">
-            <h4 className="text-sm font-semibold mb-1">Agregar Material</h4>
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-2 mb-2">
-                <input placeholder="Material" value={form.material} onChange={(e) => setForm({ ...form, material: e.target.value })} className="border px-2 py-1 rounded" />
-                <input placeholder="Cantidad" type="number" value={form.cantidad} onChange={(e) => setForm({ ...form, cantidad: e.target.value })} className="border px-2 py-1 rounded" />
-                <input placeholder="Precio" type="number" value={form.precio} onChange={(e) => setForm({ ...form, precio: e.target.value })} className="border px-2 py-1 rounded" />
-                <input placeholder="Unidad" value={form.unidad} onChange={(e) => setForm({ ...form, unidad: e.target.value })} className="border px-2 py-1 rounded" />
-                <input placeholder="Detalles" value={form.detalles} onChange={(e) => setForm({ ...form, detalles: e.target.value })} className="border px-2 py-1 rounded" />
+        <div className="mb-6">
+            <h4 className="text-sm font-semibold mb-2 text-foreground">Agregar Material</h4>
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-2 mb-3">
+                <input
+                    placeholder="Material"
+                    value={form.material}
+                    onChange={(e) => setForm({ ...form, material: e.target.value })}
+                    className="border border-border bg-background text-foreground px-3 py-2 text-sm rounded-md"
+                />
+                <input
+                    type="number"
+                    placeholder="Cantidad"
+                    value={form.cantidad}
+                    onChange={(e) => setForm({ ...form, cantidad: e.target.value })}
+                    className="border border-border bg-background text-foreground px-3 py-2 text-sm rounded-md"
+                />
+                <input
+                    type="number"
+                    placeholder="Precio"
+                    value={form.precio}
+                    onChange={(e) => setForm({ ...form, precio: e.target.value })}
+                    className="border border-border bg-background text-foreground px-3 py-2 text-sm rounded-md"
+                />
+                <input
+                    placeholder="Unidad"
+                    value={form.unidad}
+                    onChange={(e) => setForm({ ...form, unidad: e.target.value })}
+                    className="border border-border bg-background text-foreground px-3 py-2 text-sm rounded-md"
+                />
+                <input
+                    placeholder="Detalles"
+                    value={form.detalles}
+                    onChange={(e) => setForm({ ...form, detalles: e.target.value })}
+                    className="border border-border bg-background text-foreground px-3 py-2 text-sm rounded-md"
+                />
             </div>
-            <button onClick={() => mutation.mutate()} className="text-sm bg-green-600 text-white px-3 py-1 rounded">
+            <button
+                onClick={() => mutation.mutate()}
+                className="bg-primary text-primary-foreground hover:bg-primary/90 transition-colors px-4 py-2 rounded-md text-sm"
+            >
                 Guardar Material
             </button>
         </div>
